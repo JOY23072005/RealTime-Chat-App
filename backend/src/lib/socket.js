@@ -5,17 +5,12 @@ import express from "express";
 const app = express();
 const server = http.createServer(app);
 
+// Create Socket.IO server with CORS
 const io = new Server(server, {
   cors: {
     origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
-    credentials: true
   },
-  // Remove path if using default namespace
-  // path: "/socket.io",  // Only for custom paths
-  transports: ["websocket"],
-  pingTimeout: 60000,
-  pingInterval: 25000
 });
 
 
