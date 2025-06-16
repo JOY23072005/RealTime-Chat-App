@@ -7,23 +7,17 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: [process.env.CLIENT_URL],
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
     credentials: true
   },
-  path: "/socket.io",
+  // Remove path if using default namespace
+  // path: "/socket.io",  // Only for custom paths
   transports: ["websocket"],
-  allowEIO3: true, // For Socket.IO v2/v3 compatibility
   pingTimeout: 60000,
-  pingInterval: 25000,
-  cookie: {
-    name: "io",
-    path: "/",
-    httpOnly: true,
-    sameSite: "none",
-    secure: true
-  }
+  pingInterval: 25000
 });
+
 
 
 export function getReceiverSocketId(userId) {
