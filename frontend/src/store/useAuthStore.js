@@ -88,11 +88,36 @@ export const useAuthStore = create((set, get) => ({
     if (!authUser || get().socket?.connected) return;
 
     const socket = io(BASE_URL, {
+      path: "/socket.io",
+      transports: ["websocket"],
+      upgrade: false, // Disable upgrade polling
+      reconnectionAttempts: 5,
+      reconnectionDelay: 3000,
+      withCredentials: true,
       query: {
         userId: authUser._id,
       },
+      auth: {
+        token: authUser.token // If using JWT
+      }
     });
     socket.connect();
+
+    socket.on("connect_error", (err) => {
+      console.error("Connection error:", {
+        message: err.message,
+        cause: err.cause,
+        stack: err.stack
+      });
+      
+      // Attempt reconnection with exponential backoff
+      setTimeout(() => {
+        if (!socket.connected) {
+          socket.connect();
+        }
+      }, 5000);
+    });
+
 
     set({ socket: socket });
 
