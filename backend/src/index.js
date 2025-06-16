@@ -15,12 +15,13 @@ app.use(bodyParser.json({ limit: "10mb" })); // Adjust the size as needed
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
 const PORT = process.env.PORT;
+const CLIENT_URL = process.env.CLIENT_URL
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: CLIENT_URL,
     credentials: true,
   })
 );
