@@ -88,15 +88,9 @@ export const useAuthStore = create((set, get) => ({
     if (!authUser || get().socket?.connected) return;
 
     const socket = io(BASE_URL, {
-      // Remove path if using default namespace
-      // path: "/socket.io",  // Only include if you have a specific path
-      transports: ["websocket"],
-      reconnectionAttempts: 5,
-      reconnectionDelay: 3000,
-      withCredentials: true,
-      query: {  // Preferred over query for security
-        userId: authUser._id
-      }
+      query: {
+        userId: authUser._id,
+      },
     });
     
     // Debug connection events
