@@ -5,6 +5,8 @@ import express from "express";
 const app = express();
 const server = http.createServer(app);
 
+console.log(process.env.CLIENT_URL);
+
 // Create Socket.IO server with CORS
 const io = new Server(server, {
   cors: {
