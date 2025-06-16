@@ -94,8 +94,7 @@ export const useAuthStore = create((set, get) => ({
       reconnectionAttempts: 5,
       reconnectionDelay: 3000,
       withCredentials: true,
-      auth: {  // Preferred over query for security
-        token: authUser.token,
+      query: {  // Preferred over query for security
         userId: authUser._id
       }
     });
